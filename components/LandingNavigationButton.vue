@@ -18,12 +18,12 @@ export default {
     transition-property: all;
     transition-duration: 200ms;
     transition-timing-function: ease-in-out;
-    opacity: 0%;
+    opacity: 0;
     transform: translateY(-100%) rotateZ(-12deg);
     visibility: hidden;
   }
   .labeled-button:hover ~ .label {
-    opacity: 100%;
+    opacity: 1;
     transform: translateY(-50%) rotateZ(0deg);
     visibility: visible;
   }
