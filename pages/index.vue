@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div class='h-screen flex flex-col md:flex-row'>
+    <p><p />
+    <section id='hero' class='h-screen flex flex-col md:flex-row relative'>
       <div class='flex-grow flex justify-center items-center'>
         <div class='p-6 md:px-10 md:py-8 bg-gray-700 text-white rounded shadow'>
           <p class='text-2xl font-medium'><b class='text-red-500 font-medium'>Hello!</b> i'm</p>
@@ -37,9 +38,8 @@
               </svg>
             </social-button>
           </div>
-
         </div>
-        <div class='ml-8 space-y-12 text-white'>
+        <div class='ml-8 space-y-12 text-white hidden md:block'>
           <landing-navigation-button label='About Me'>
             <template slot='svg-path'>
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -58,10 +58,73 @@
         </div>
       </div>
       <video class='md:w-1/2' src='/guya-dance.mp4' muted loop autoplay />
-    </div>
-    <div class='h-screen bg-gray-50'>
-
-    </div>
+      <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+        <a href="#about-me">
+          <div ref='scrollDownButton' class="transition duration-300 bg-red-500 p-3 rounded-full shadow-md animate-bounce text-white">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+            </svg>
+          </div>
+        </a>
+      </div>
+    </section>
+    <section id="about-me" class='min-h-screen flex items-center'>
+      <div>
+        <h1 class="text-3xl text-center mb-16">
+          <p class="text-red-600 inline font-semibold">&lt;</p>
+          About Me
+          <p class="text-red-600 inline font-semibold">&gt;</p>
+        </h1>
+        <div class='grid gap-y-8 md:grid-cols-3 md:mx-32'>
+          <div class='flex justify-center items-center'>
+            <div class="photo-frame">
+              <img src='/photo-placeholder.png' class='photo-frame h-72 w-56 md:h-96 md:w-72 object-cover rounded-md' />
+            </div>
+          </div>
+          <div class='mx-8 p-3 md:col-span-2'>
+            <p class="text-4xl md:mb-6 mt-6">
+              <b class='text-red-600 font-semibold'>Firdaus Bisma S</b>uryakusuma
+            </p>
+            <p class='md:mb-8 text-xl'>
+              A passionate amateur software developer. Usually programs in C#, JavaScript and TypeScript.
+              Lives by the principle that every project is an opportunity to learn a new piece of technology.
+              Aspires to be a fullstack web and mobile developer.
+            </p>
+            <div class=''>
+              <button class='bg-gray-700 px-3 py-2 rounded shadow text-white mr-4 transition duration-300 hover:bg-gray-800 transform hover:-rotate-6 hover:scale-105 active:scale-95'>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+                Resume
+              </button>
+              <a class="my-auto text-red-700 font-semibold hover:text-red-800 hover:underline cursor-pointer">
+                Learn more about me
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="posts" class="min-h-screen flex items-center">
+      <div class="w-full">
+        <h1 class="text-3xl text-center mb-16">
+          <p class="text-red-600 inline font-semibold">&lt;</p>
+          My Posts
+          <p class="text-red-600 inline font-semibold">&gt;</p>
+        </h1>
+      </div>
+    </section>
+    <section id="projects" class="min-h-screen flex items-center">
+      <div class="w-full">
+        <h1 class="text-3xl text-center mb-16">
+          <p class="text-red-600 inline font-semibold">&lt;</p>
+          My Projects
+          <p class="text-red-600 inline font-semibold">&gt;</p>
+        </h1>
+      </div>
+    </section>
+    <section id='footer' class='h-96 bg-gray-500'>
+    </section>
   </div>
 </template>
 
@@ -69,10 +132,70 @@
 import LandingNavigationButton from '~/components/LandingNavigationButton.vue'
 import SocialButton from '~/components/SocialButton.vue'
 export default {
-  components: { SocialButton, LandingNavigationButton }
+  components: { SocialButton, LandingNavigationButton },
+  mounted () {
+    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+      anchor.addEventListener('click', (event) => {
+        event.preventDefault()
+
+        document.querySelector(anchor.getAttribute('href')).scrollIntoView({ behavior: 'smooth' })
+      })
+    })
+  }
 }
 </script>
 
 <style>
+  .photo-frame {
+    position: relative;
+  }
+  .photo-frame::after, .photo-frame::before {
+    content: '';
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    z-index: -10;
+    border: solid red;
+    border-radius: 0.5rem;
+  }
+  .photo-frame::after {
+    top: 16px;
+    left: 16px;
+    transform: rotateZ(2deg);
 
+    animation: after-photoframe-bounce 1s ease-in-out 0s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+  }
+  @keyframes after-photoframe-bounce {
+    from {
+      top: 18px;
+      transform: rotateZ(2deg);
+    }
+
+    to {
+      top: 10px;
+      transform: rotateZ(1deg);
+    }
+  }
+  .photo-frame::before {
+    top: -20px;
+    left: -12px;
+    transform: rotateZ(-1.5deg);
+
+    animation: before-photoframe-bounce 0.8s ease-in-out 0s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+  }
+  @keyframes before-photoframe-bounce {
+    from {
+      top: -20px;
+      transform: rotateZ(-1.5deg);
+    }
+
+    to {
+      top: -12px;
+      transform: rotateZ(-1deg);
+    }
+  }
 </style>
